@@ -13,12 +13,25 @@ public class JobService {
     @Autowired
     private JobRepo repo;
 
-    public void addJob(JobPost jobPost) {
+    public JobPost addJob(JobPost jobPost) {
         repo.addJob(jobPost);
+        return repo.getJob(jobPost.getPostId());
     }
 
     public List<JobPost> getAllJobs() {
         return repo.getAllJobs(); 
+    }
+
+    public JobPost getJob(int postId) {
+        return repo.getJob(postId);
+    }
+
+    public void updateJob(JobPost job) {
+        repo.updateJob(job);
+    }
+
+    public void deleteJob(int postId) {
+        repo.deleteJob(postId);
     }
 
 }

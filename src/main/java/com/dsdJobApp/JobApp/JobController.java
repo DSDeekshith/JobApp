@@ -16,30 +16,32 @@ public class JobController {
     @Autowired
     private JobService service;
 
-//    @GetMapping ({"/", "home"})
-//    public String home() {
-//        return "home";
-//    }
-//
-//    @GetMapping("addjob")
-//    public String addJob() {
-//
-//        return "addjob";
-//    }
-
-//    @PostMapping("handleForm")
-//    public String handleForm(JobPost jobPost) {
-//        service.addJob(jobPost);
-//        return "success";
-//    }
-
-//    @RequestMapping("/success")
-//    public String success() {
-//        return "success";
-//    }
-//
-    @GetMapping("/jobPosts")
+    @GetMapping("jobPosts")
     public List<JobPost> viewAllJobs(Model m) {
         return service.getAllJobs();
     }
+
+    @GetMapping("jobPost/{postId}")
+    public JobPost getJob(@PathVariable("postId") int postId) {
+        return service.getJob(postId);
+    }
+
+    @PostMapping("jobPost")
+    public JobPost addJob(@RequestBody JobPost job) {
+        service.addJob(job);
+        return service.getJob(job.getPostId());
+    }
+
+    @PutMapping("jobPost")
+    public JobPost updateJob(@RequestBody JobPost jobPost) {
+        service.updateJob(jobPost);
+        return service.getJob(jobPost.getPostId());
+    }
+
+    @DeleteMapping("jobPost/{postId}")
+    public String deleteJob(@PathVariable("postId") int postId) {
+        service.deleteJob(postId);
+        return "Deleted";
+    }
+
 }
